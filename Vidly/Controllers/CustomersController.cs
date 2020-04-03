@@ -4,10 +4,13 @@ using System.Web.Mvc;
 using Vidly.Models;
 using Vidly.ViewModels;
 
+
 namespace Vidly.Controllers
 {
     public class CustomersController : Controller
     {
+
+
         private ApplicationDbContext _context;
 
         public CustomersController()
@@ -20,6 +23,10 @@ namespace Vidly.Controllers
             _context.Dispose();
         }
 
+
+
+
+
         public ActionResult New()
         {
             var membershipTypes = _context.MembershipTypes.ToList();
@@ -30,6 +37,10 @@ namespace Vidly.Controllers
 
             return View("CustomerForm", viewModel);
         }
+
+
+
+
 
         [HttpPost]
         public ActionResult Save(Customer customer)
@@ -50,12 +61,20 @@ namespace Vidly.Controllers
             return RedirectToAction("Index", "Customers");
         }
 
+
+
+
+
         public ViewResult Index()
         {
             var customers = _context.Customers.Include(c => c.MembershipType).ToList();
 
             return View(customers);
         }
+
+
+
+
 
         public ActionResult Details(int id)
         {
@@ -66,6 +85,10 @@ namespace Vidly.Controllers
 
             return View(customer);
         }
+
+
+
+
 
         public ActionResult Edit(int id)
         {
