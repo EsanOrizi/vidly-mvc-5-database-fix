@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Core.Metadata.Edm;
 using System.Linq;
 using System.Web.Mvc;
 using Vidly.Models;
@@ -20,6 +21,17 @@ namespace Vidly.Controllers
         {
             _context.Dispose();
         }
+
+        public ActionResult New()
+        {
+
+            var genres = _context.Genres.ToList();
+            var viewModel = new NewMovieViewModel()
+                {Genres = genres};
+
+            return View(viewModel);
+        }
+
 
         public ViewResult Index()
         {
