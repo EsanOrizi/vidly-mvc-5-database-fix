@@ -1,11 +1,11 @@
-﻿@model Vidly.ViewModels.NewMovieViewModel
+﻿@model Vidly.ViewModels.MovieFormViewModel
 @{
     ViewBag.Title = "New Movie";
 }
 
 <h2>New Movie</h2>
 
-@using (Html.BeginForm("Create", "Movies"))
+@using (Html.BeginForm("Save", "Movies"))
 {
     <div class="form-group">
         @Html.LabelFor(m => m.Movie.Name)
