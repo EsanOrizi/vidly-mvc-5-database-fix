@@ -22,7 +22,10 @@ namespace Vidly.Models
             // Or customer.MembershipTypeId == 0 i.e. user has not selected membership type yet, don't show error message
 
             // validation is successful 
-            if (customer.MembershipTypeId == 0 || customer.MembershipTypeId == 1)
+
+            // refactoring magic numbers, replace 0 and 1 with corresponding value from membership type class  
+            if (customer.MembershipTypeId == MembershipType.Unknown ||
+                customer.MembershipTypeId == MembershipType.PayAsYouGo)
                 return ValidationResult.Success;
 
             // otherwise if birthdate is empty 
