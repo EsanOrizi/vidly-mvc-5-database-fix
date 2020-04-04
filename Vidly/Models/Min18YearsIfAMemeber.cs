@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
 
 namespace Vidly.Models
-{   
+{
     // this is the class for a business rule that is any customer that is going on a membership type other than pas as you go has to be over 18
     // : ValidationAttribute to drive this class from ValidationAttribute
     public class Min18YearsIfAMemeber : ValidationAttribute
@@ -15,7 +12,7 @@ namespace Vidly.Models
         {
             // 'validationContext.ObjectInstance' this gives us access to the containing class, in this case customer
             // because this is an object we need to cast it to the customer 
-            var customer = (Customer) validationContext.ObjectInstance;
+            var customer = (Customer)validationContext.ObjectInstance;
 
             // check the selected membership type 
             // if customer.MembershipTypeId == 1 i.e. is pay as you go
@@ -30,7 +27,7 @@ namespace Vidly.Models
 
             // otherwise if birthdate is empty 
             if (customer.Birthdate == null)
-                return  new ValidationResult("Birthdate is required");
+                return new ValidationResult("Birthdate is required");
 
             // calculate the age
             var age = DateTime.Today.Year - customer.Birthdate.Value.Year;

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
@@ -28,8 +27,12 @@ namespace Vidly.Controllers
         {
 
             var genres = _context.Genres.ToList();
-            var viewModel = new MovieFormViewModel()
-            { Genres = genres };
+            var viewModel = new MovieFormViewModel
+
+            {
+                Movie = new Movie(),
+                Genres = genres
+            };
 
             return View("MovieForm", viewModel);
         }
@@ -45,13 +48,13 @@ namespace Vidly.Controllers
             if (!ModelState.IsValid)
             {
 
+
                 var viewModel = new MovieFormViewModel
                 {
                     Movie = movie,
                     Genres = _context.Genres.ToList()
-                };
-
-                // return this view, customer form 
+                }; 
+                
                 return View("MovieForm", viewModel);
             }
 
@@ -101,7 +104,7 @@ namespace Vidly.Controllers
         }
 
 
-        
+
 
         public ActionResult Edit(int id)
         {
