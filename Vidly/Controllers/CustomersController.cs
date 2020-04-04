@@ -32,6 +32,8 @@ namespace Vidly.Controllers
             var membershipTypes = _context.MembershipTypes.ToList();
             var viewModel = new CustomerFormViewModel
             {
+                // customer when initialized will have a value (0) and the error in the validation summary will go away
+                Customer = new Customer(),
                 MembershipTypes = membershipTypes
             };
 
