@@ -7,7 +7,8 @@ namespace Vidly.Models
     {
         public int Id { get; set; }
 
-        [Required]
+        // override validation error message 
+        [Required(ErrorMessage = "Please enter customer's name.")]
         [StringLength(255)]
         public string Name { get; set; }
 
@@ -17,8 +18,12 @@ namespace Vidly.Models
 
         [Display(Name = "Membership Type")]
         public byte MembershipTypeId { get; set; }
-
+        
+        
+        
         [Display(Name = "Date of Birth")]
+        // apply the attribute to birthdate 
+        [Min18YearsIfAMemeber]
         public DateTime? Birthdate { get; set; }
     }
 }
