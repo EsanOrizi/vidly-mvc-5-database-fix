@@ -45,6 +45,25 @@ namespace Vidly.Controllers
         [HttpPost]
         public ActionResult Save(Customer customer)
         {
+            // Form Validation
+            // if model state is not valid, rerun the same view i.e. customer form
+            // otherwise we either add or update the customer, after if statement
+            if (!ModelState.IsValid)
+            {
+
+                var viewModel = new CustomerFormViewModel
+                {
+                    // set its customer object to customer we get from the form/ or from this action
+                    // also get membership types
+                    Customer = customer,
+                    MembershipTypes = _context.MembershipTypes.ToList()
+                };
+
+                // return this view, customer form 
+                return View("CustomerForm", viewModel);
+            }
+
+
             if (customer.Id == 0)
                 _context.Customers.Add(customer);
             else
