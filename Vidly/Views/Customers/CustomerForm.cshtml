@@ -32,6 +32,16 @@
         </label>
     </div>
     @Html.HiddenFor(m => m.Customer.Id)
+    @Html.AntiForgeryToken()
     <button type="submit" class="btn btn-primary">Save</button>    
 }
 
+
+
+@* To add client side validation to form *@
+
+@section scripts
+{
+    @Scripts.Render("~/bundles/jqueryval")
+
+}
