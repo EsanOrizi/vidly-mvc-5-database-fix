@@ -56,12 +56,12 @@ namespace Vidly.Controllers.Api
         // save a movie
         // POST /api/movies
         [HttpPost]
-        public MovieDto CreateMovie(MovieDto movieDto)
+        public IHttpActionResult CreateMovie(MovieDto movieDto)
         {
 
             // masking sure movie is valid
             if (!ModelState.IsValid)
-                throw new HttpResponseException(HttpStatusCode.BadRequest);
+                return BadRequest();
 
             var movie = Mapper.Map<MovieDto, Movie>(movieDto);
 
@@ -71,7 +71,7 @@ namespace Vidly.Controllers.Api
 
             movieDto.Id = movie.Id;
 
-            return movieDto;
+            return Created(new Uri(Request.RequestUri + "/" + movie.Id), movieDto);
 
         }
 
