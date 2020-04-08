@@ -4,7 +4,9 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using AutoMapper;
 using Microsoft.Ajax.Utilities;
+using Vidly.Dtos;
 using Vidly.Models;
 
 namespace Vidly.Controllers.Api
@@ -26,9 +28,9 @@ namespace Vidly.Controllers.Api
         //--------------------------------------------
         // get a list of movies
         // GET /api/movies
-        public IEnumerable<Movie> GetMovies()
+        public IEnumerable<MovieDto> GetMovies()
         {
-            return _context.Movies.ToList();
+            return _context.Movies.ToList().Select(Mapper.Map<Movie, MovieDto>);
         }
 
 
@@ -39,14 +41,14 @@ namespace Vidly.Controllers.Api
         //--------------------------------------------
         // get a single movie
         // GET /api/movies/1
-        public Movie GetMovie(int id)
+        public MovieDto GetMovie(int id)
         {
             var movie = _context.Movies.SingleOrDefault(m => m.Id == id);
 
             if (movie == null)
                 throw new HttpResponseException(HttpStatusCode.NotFound);
 
-            return movie;
+            return Mapper.Map<Movie, MovieDto>(movie);
         }
 
 
@@ -54,18 +56,22 @@ namespace Vidly.Controllers.Api
         // save a movie
         // POST /api/movies
         [HttpPost]
-        public Movie CreateMovie(Movie movie)
+        public MovieDto CreateMovie(MovieDto movieDto)
         {
 
             // masking sure movie is valid
             if (!ModelState.IsValid)
                 throw new HttpResponseException(HttpStatusCode.BadRequest);
 
+            var movie = Mapper.Map<MovieDto, Movie>(movieDto);
+
             // if valid save 
             _context.Movies.Add(movie);
             _context.SaveChanges();
 
-            return movie;
+            movieDto.Id = movie.Id;
+
+            return movieDto;
 
         }
 
@@ -76,7 +82,7 @@ namespace Vidly.Controllers.Api
         // update a movie
         // PUT /api/movies/1
         [HttpPut]
-        public void UpdateMovie(int id, Movie movie)
+        public void UpdateMovie(int id, MovieDto movieDto)
         {
 
             // masking sure movie is valid
@@ -90,13 +96,10 @@ namespace Vidly.Controllers.Api
             if (movieInDb == null)
                 throw new HttpResponseException(HttpStatusCode.NotFound);
 
+
             // if not null  then save
-            movieInDb.Id = movie.Id;
-            movieInDb.Name = movie.Name;
-            movieInDb.GenreId = movie.GenreId;
-            movieInDb.DateAdded = movie.DateAdded;
-            movieInDb.ReleaseDate = movie.ReleaseDate;
-            movieInDb.NumberInStock = movie.NumberInStock;
+
+            Mapper.Map(movieDto, movieInDb);
 
             // save changes
             _context.SaveChanges();
