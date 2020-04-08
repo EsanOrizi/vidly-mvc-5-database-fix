@@ -25,7 +25,7 @@ namespace Vidly.Dtos
 
 
         [Display(Name = "Date of Birth")]
-        [Min18YearsIfAMemeber]
+  //      [Min18YearsIfAMemeber]
         public DateTime? Birthdate { get; set; }
 
 
