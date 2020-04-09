@@ -17,6 +17,7 @@ namespace Vidly.App_Start
             Mapper.CreateMap<CustomerDto, Customer>().ForMember(c => c.Id, opt => opt.Ignore()); ;
             // API -> Outbound
             Mapper.CreateMap<Customer, CustomerDto>();
+            Mapper.CreateMap<MembershipType, MembershipTypeDto>();
 
 
 
