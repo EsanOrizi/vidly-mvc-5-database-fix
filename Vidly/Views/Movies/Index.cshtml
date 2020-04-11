@@ -44,8 +44,7 @@
         $(document).ready(function() {
 
             @*   DataTables Plug-in   *@
-
-            $("#movies").DataTable(
+            var table = $("#movies").DataTable(
                 {   @* use ajax *@
                     ajax: {
                         url: "/api/movies",
@@ -96,7 +95,9 @@
                                         method: "DELETE",
                                         success: function() {
 
+                                            table.row(button.parents("tr")).remove().draw();
                                             button.parents("tr").remove();
+
 
 
                                         }
