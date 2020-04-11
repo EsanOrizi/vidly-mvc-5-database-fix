@@ -51,9 +51,15 @@
 
         *@
 
-    <script>
-        $(document).ready(function() {
-            $("#movies .js-delete").on("click",
+<script>
+    $(document).ready(function () {
+
+        @* to optimize the event handler to have only one click handler for all buttons
+               handler is hooked to only movies table as selector
+               .js-delete is the filter, if click event is raised from element matching the selector
+               callback function() will be called     *@
+
+            $("#movies").on("click", ".js-delete",
                 function() {
 
 
@@ -83,7 +89,7 @@
         });
 
 
-    </script>
+</script>
 
 
 }
