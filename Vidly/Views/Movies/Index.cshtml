@@ -28,45 +28,61 @@
     </tr>
     </thead>
     <tbody>
-    @foreach (var movie in Model)
-    {
-        <tr>
-            <td>@Html.ActionLink(movie.Name, "Edit", "Movies", new { id = movie.Id }, null)</td>
-            <td>@movie.Genre.Name</td>
-            <td>
-                @* Add Delete button and use bootstrap class btn-link and js-delete to handle button click
-                   add data-movie-id="@movie.Id" so we can address the clicked movie's Id  *@
-                <button data-movie-id="@movie.Id" class="btn-link js-delete">Delete</button>
-            </td>
-        </tr>
-    }
+   
     </tbody>
 </table>
 
 @section scripts
 {
-    
+
     @* get movies table and find all element with js-delete element
        add on click function and then popup confirmation box 
 
         *@
 
-<script>
-    $(document).ready(function () {
+    <script>
+        $(document).ready(function() {
 
-        @*   DataTables Plug-in   *@
+            @*   DataTables Plug-in   *@
 
-        $("#movies").DataTable();
+            $("#movies").DataTable(
+                {   @* use ajax *@
+                    ajax: {
+                        url: "/api/movies",
+                        dataSrc: ""
+                    },
+
+                    @* columns for table *@
+
+                    columns: [
+                        {   @* First column name *@
+                            data: "name",
+                            render: function(data, type, movie) {
+                                return "<a href='/movies/edit/" + movie.id + "'>" + movie.name + "</a>";
+                            }
+                        },
+                        {   @* Second column genre  *@
+                            data: "name"
+                        },
+                        {   @* Third column delete button *@
+                            data: "id",
+                            render: function(data) {
+                                return "<button class='btn-link js-delete' data-movie-id=" + data + ">Delete</button>";
+                            }
+                        }
+                    ]
+                }
+            );
 
 
-        @* to optimize the event handler to have only one click handler for all buttons
+            @* to optimize the event handler to have only one click handler for all buttons
                handler is hooked to only movies table as selector
                .js-delete is the filter, if click event is raised from element matching the selector
                callback function() will be called     *@
 
-            $("#movies").on("click", ".js-delete",
+            $("#movies").on("click",
+                ".js-delete",
                 function() {
-
 
 
                     var button = $(this);
@@ -95,7 +111,7 @@
         });
 
 
-</script>
+    </script>
 
 
 }
