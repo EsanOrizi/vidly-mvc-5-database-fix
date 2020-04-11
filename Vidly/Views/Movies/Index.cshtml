@@ -54,6 +54,11 @@
 <script>
     $(document).ready(function () {
 
+        @*   DataTables Plug-in   *@
+
+        $("#movies").DataTable();
+
+
         @* to optimize the event handler to have only one click handler for all buttons
                handler is hooked to only movies table as selector
                .js-delete is the filter, if click event is raised from element matching the selector
@@ -61,6 +66,7 @@
 
             $("#movies").on("click", ".js-delete",
                 function() {
+
 
 
                     var button = $(this);
