@@ -1,0 +1,73 @@
+﻿@model IEnumerable<Vidly.Models.Movie>
+
+@{
+    ViewBag.Title = "Movies";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+
+@* Final section 7 exercise *@
+
+<h2>Movies</h2>
+
+
+@* give table an id *@
+<table id="movies" class="table table-bordered table-hover">
+    <thead>
+    <tr>
+        <th>Movie</th>
+        <th>Genre</th>
+     
+    </tr>
+    </thead>
+    <tbody>
+   
+    </tbody>
+</table>
+
+@section scripts
+{
+
+    @* get movies table and find all element with js-delete element
+       add on click function and then popup confirmation box 
+
+        *@
+
+    <script>
+        $(document).ready(function() {
+
+            @*   DataTables Plug-in   *@
+            var table = $("#movies").DataTable(
+                {   @* use ajax *@
+                    ajax: {
+                        url: "/api/movies",
+                        dataSrc: ""
+                    },
+
+                    @* columns for table *@
+
+                    columns: [
+                        {   @* First column name *@
+                            data: "name"
+                           
+                        },
+                        {   @* Second column genre  *@
+                            data: "genre.name"
+                        },
+                       
+                        
+                    ]
+                }
+            );
+
+  
+
+        });
+
+
+    </script>
+
+
+}

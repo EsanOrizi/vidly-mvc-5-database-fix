@@ -23,6 +23,8 @@ namespace Vidly.Controllers
             _context.Dispose();
         }
 
+
+        [Authorize(Roles = RoleName.CanManageMovies)]
         public ActionResult New()
         {
 
@@ -86,8 +88,10 @@ namespace Vidly.Controllers
 
         public ViewResult Index()
         {
+            if (User.IsInRole(RoleName.CanManageMovies))
+                return View("List");
 
-            return View();
+            return View("ReadOnlyList");
         }
 
 
