@@ -24,11 +24,14 @@ textarea {
 }
 
 /* Set validation error text for form fields to RED */
-.field-validation-error {
+.field-validation-error, 
+label.error {
     color: red;
 }
 
 /* any field that has input validation error will have a 2 pixel red border */
-.input-validation-error {
+.input-validation-error, 
+input.error {
     border: 2px solid red;
 }
+
